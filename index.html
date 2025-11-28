@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axify Lab – Simulador SMM</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Axify Lab — Simulador SMM</h1>
+</header>
+
+<div class="container">
+
+    <label>Selecione o serviço:</label>
+    <select id="service">
+        <option value="">Selecione...</option>
+
+        <option value="Curtidas Brasileiras" data-price="5.09" data-min="100">IG — Curtidas Brasileiras</option>
+        <option value="Seguidores Brasileiros Premium" data-price="38.61" data-min="100">IG — Seguidores Brasileiros (Premium)</option>
+        <option value="Curtidas Mundiais" data-price="4.51" data-min="100">IG — Curtidas Mundiais</option>
+        <option value="Visualizações Reels" data-price="0.15" data-min="1000">IG — Visualizações (Reels)</option>
+        <option value="Seguidores Mundiais" data-price="8.03" data-min="100">IG — Seguidores Mundiais</option>
+
+        <option value="TikTok Curtidas" data-price="0.35" data-min="50">TikTok — Curtidas Mundiais</option>
+        <option value="TikTok Seguidores BR Premium" data-price="23.87" data-min="100">TikTok — Seguidores Brasileiros (Premium)</option>
+        <option value="TikTok Views" data-price="0.10" data-min="1000">TikTok — Visualizações Mundiais</option>
+    </select>
+
+    <label>Quantidade desejada:</label>
+    <input type="number" id="quantity" placeholder="Digite a quantidade">
+
+    <button class="btn" onclick="simulate()">Simular</button>
+
+    <div class="result-box" id="result">
+        <h3>Resultado da simulação</h3>
+        <p id="details"></p>
+
+        <button class="btn" onclick="sendWhatsApp()">Enviar no WhatsApp</button>
+    </div>
+
+</div>
+
+<footer>Axify Social © 2025 — Powered by Axium Studio</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
