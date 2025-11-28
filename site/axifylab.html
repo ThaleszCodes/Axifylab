@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axify Lab – Simulador SMM</title>
+
+<style>
+    body {
+        background: #0f0f0f;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: #111;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 2px solid #6c47ff;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 26px;
+        letter-spacing: 1px;
+        color: #6c47ff;
+    }
+
+    .container {
+        padding: 20px;
+        max-width: 550px;
+        margin: auto;
+        background: #151515;
+        margin-top: 30px;
+        border-radius: 12px;
+        box-shadow: 0px 0px 10px #000;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-size: 16px;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        background: #222;
+        color: #fff;
+    }
+
+    .result-box {
+        background: #1f1f1f;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        display: none;
+        border: 1px solid #6c47ff;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 15px;
+        text-align: center;
+        background: #6c47ff;
+        margin-top: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: bold;
+        color: #fff;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #5633ff;
+    }
+
+    footer {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 13px;
+        padding-bottom: 20px;
+        color: #777;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Axify Lab — Simulador SMM</h1>
+</header>
+
+<div class="container">
+
+    <label>Selecione o serviço:</label>
+    <select id="service">
+        <option value="">Selecione...</option>
+
+        <option value="Curtidas Brasileiras" data-price="5.09" data-min="100">IG — Curtidas Brasileiras</option>
+        <option value="Seguidores Brasileiros Premium" data-price="38.61" data-min="100">IG — Seguidores Brasileiros (Premium)</option>
+        <option value="Curtidas Mundiais" data-price="4.51" data-min="100">IG — Curtidas Mundiais</option>
+        <option value="Visualizações Reels" data-price="0.15" data-min="1000">IG — Visualizações (Reels)</option>
+        <option value="Seguidores Mundiais" data-price="8.03" data-min="100">IG — Seguidores Mundiais</option>
+
+        <option value="TikTok Curtidas" data-price="0.35" data-min="50">TikTok — Curtidas Mundiais</option>
+        <option value="TikTok Seguidores BR Premium" data-price="23.87" data-min="100">TikTok — Seguidores Brasileiros (Premium)</option>
+        <option value="TikTok Views" data-price="0.10" data-min="1000">TikTok — Visualizações Mundiais</option>
+    </select>
+
+    <label>Quantidade desejada:</label>
+    <input type="number" id="quantity" placeholder="Digite a quantidade">
+
+    <button class="btn" onclick="simulate()">Simular</button>
+
+    <div class="result-box" id="result">
+        <h3>Resultado da simulação</h3>
+        <p id="details"></p>
+
+        <button class="btn" onclick="sendWhatsApp()">Enviar no WhatsApp</button>
+    </div>
+
+</div>
+
+<footer>Axify Social © 2025 — Powered by Axium Studio</footer>
+
+<script>
+function simulate() {
+    let serviceEl = document.getElementById("service");
+    let qty = Number(document.getElementById("quantity").value);
+
+    if (!serviceEl.value) {
+        alert("Selecione um serviço!");
+        return;
+    }
+    if (!qty || qty <= 0) {
+        alert("Digite uma quantidade válida!");
+        return;
+    }
+
+    let price = Number(serviceEl.selectedOptions[0].getAttribute("data-price"));
+    let min = Number(serviceEl.selectedOptions[0].getAttribute("data-min"));
+    let serviceName = serviceEl.value;
+
+    if (qty < min) {
+        alert(`A quantidade mínima para este serviço é ${min}.`);
+        return;
+    }
+
+    let total = (qty / 1000) * price;
+    total = total.toFixed(2);
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("details").innerHTML = `
+        <b>Serviço:</b> ${serviceName} <br>
+        <b>Quantidade:</b> ${qty} <br>
+        <b>Valor total:</b> R$ ${total}
+    `;
+
+    window.simData = { serviceName, qty, total };
+}
+
+function sendWhatsApp() {
+    if (!window.simData) return;
+
+    let phone = "5553991257648".replace(/\D/g, ""); // Número formatado
+
+    let msg = 
+`📦 SIMULAÇÃO — Axify Social
+
+🔹 Serviço: ${simData.serviceName}
+🔹 Quantidade: ${simData.qty}
+💰 Total: R$ ${simData.total}
+
+Desejo realizar o pedido!`;
+
+    let url = `https://wa.me/${phone}?text=` + encodeURIComponent(msg);
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
